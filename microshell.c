@@ -128,7 +128,7 @@ void	launch_process(t_cmd *cmd, char *sep, char **env)
 
 	while (cmd)
 	{
-		if (sep && *sep == ';')
+		if (!sep || !*sep || *sep == ';')
 		{
 			pid = fork();
 			if (pid == 0)
