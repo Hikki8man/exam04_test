@@ -87,29 +87,6 @@ void cd(t_cmd *cmd)
 	}
 }
 
-void exec_cmd(t_cmd *cmd, int pipein, char **env)
-{
-	if (pipein != 0 && cmd->next)
-		close(pipein);
-	if (cmd->in != 0)
-	{
-		dup2(cmd->in, 0);
-		close(cmd->in);
-	}
-	if (cmd->out != 1)
-	{
-		dup2(cmd->out, 1);
-		close(cmd->out);
-	}
-	if (execve(*cmd->param, cmd->param, env) == -1)
-	{
-		ft_putstr_fd("error: cannot execute ", 2);
-		ft_putstr_fd(*cmd->param, 2);
-		ft_putstr_fd("\n", 2);
-		exit(1);
-	}
-}
-
 void	launch_process(t_cmd *cmd, char **env)
 {
 	int pipe_fd[2];
@@ -188,6 +165,5 @@ int main(int ac, char **av, char **env)
 		}
 		add_cmd(&cmd, av, i, i_start, 0);
 		launch_process(cmd, env);
-		
 	}
 }
