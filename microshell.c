@@ -91,6 +91,7 @@ void	launch_process(t_cmd *cmd, char **env)
 {
 	int pipe_fd[2];
 	int pid;
+	
 	while (cmd)
 	{
 		if (cmd->prev && cmd->prev->type == PIPE)
@@ -156,8 +157,6 @@ int main(int ac, char **av, char **env)
 		{
 			if ((av[i][0] == '|' && !av[i][1]) || (av[i][0] == ';' && !av[i][1]))
 			{
-				if (!av[i + 1] || av[i][0] == ';')
-					exit(1);
 				add_cmd(&cmd, av, i, i_start, av[i][0]);
 				i_start = i + 1;	
 			}
